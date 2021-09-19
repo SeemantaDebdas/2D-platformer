@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 111328014}
   - component: {fileID: 111328013}
   - component: {fileID: 111328012}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Interactable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8220,7 +8220,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bc9a0c864305b428dcb7dcf2b8b0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 0
+  moveForce: 5
+  jumpForce: 2
+  distanceToCheckGrounded: 1.68
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  isGrounded: 0
+  pressedJump: 0
 --- !u!1 &871890026
 GameObject:
   m_ObjectHideFlags: 0
