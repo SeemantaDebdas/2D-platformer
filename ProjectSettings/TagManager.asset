@@ -56,9 +56,3 @@ TagManager:
   - name: Foreground_0_TM_Layer
     uniqueID: 2367501821
     locked: 0
-  - name: Foreground_1_TM_Layer
-    uniqueID: 4060463381
-    locked: 0
-  - name: Interactables
-    uniqueID: 3280566357
-    locked: 0
