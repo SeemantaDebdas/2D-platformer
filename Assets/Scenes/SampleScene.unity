@@ -8224,12 +8224,16 @@ MonoBehaviour:
   jumpForce: 20
   maxSpeed: 7
   linearDrag: 20
+  dragMultiplier: 0.15
+  gravityScale: 1
+  fallMultiplier: 7
   distanceToCheckGrounded: 1.68
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
   pressedJump: 0
+  holdingJump: 0
   isFacingRight: 0
 --- !u!1 &871890026
 GameObject:

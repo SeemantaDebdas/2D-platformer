@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float maxSpeed = 7f;
     [SerializeField] float linearDrag = 0.5f;
+    [SerializeField] float dragMultiplier = 0.15f;
+    [SerializeField] float gravityScale = 1;
+    [SerializeField] float fallMultiplier = 5f;
     [SerializeField] float distanceToCheckGrounded;
     [SerializeField] LayerMask groundLayer;
     float movement;
@@ -16,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
     [SerializeField] bool isGrounded;
     [SerializeField] bool pressedJump;
+    [SerializeField] bool holdingJump;
     [SerializeField] bool isFacingRight;
     private void Awake()
     {
@@ -60,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
         {
             pressedJump = true;
         }
+
+        if (Input.GetKey(KeyCode.F))
+            holdingJump = true;
+        else
+            holdingJump = false;
     }
 
     private void FixedUpdate()
@@ -76,11 +85,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
+        Jump();
+        ModifyGravity();
+    }
+
+    private void Jump()
+    {
         if (pressedJump)
         {
             Debug.Log("Jumping");
             rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             pressedJump = false;
         }
     }
@@ -122,7 +137,27 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.drag = linearDrag * 0.15f;
+            rb.drag = linearDrag * dragMultiplier;
+        }
+    }
+
+    void ModifyGravity()
+    {
+        if (isGrounded)
+        {
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            rb.gravityScale = gravityScale;
+            if (rb.velocity.y < 0)
+            {
+                rb.gravityScale = gravityScale * fallMultiplier;
+            }
+            else if(rb.velocity.y > 0 && !holdingJump)
+            {
+                rb.gravityScale = gravityScale * (fallMultiplier / 2);
+            }
         }
     }
 
