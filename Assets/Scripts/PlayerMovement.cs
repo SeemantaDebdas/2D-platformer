@@ -7,15 +7,20 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveForce;
     [SerializeField] float jumpForce;
+    [SerializeField] float maxSpeed = 7f;
+    [SerializeField] float linearDrag = 0.5f;
     [SerializeField] float distanceToCheckGrounded;
     [SerializeField] LayerMask groundLayer;
     float movement;
     Rigidbody2D rb;
+    Animator anim;
     [SerializeField] bool isGrounded;
     [SerializeField] bool pressedJump;
+    [SerializeField] bool isFacingRight;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -33,6 +38,12 @@ public class PlayerMovement : MonoBehaviour
     {
         TakeInput();
         CheckGrounded();
+        DebugOperations();
+    }
+
+    private void DebugOperations()
+    {
+        Debug.Log(movement);
     }
 
     private void CheckGrounded()
@@ -56,8 +67,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        Jump();
+        HandleMovement();
+        HandleAnimation();
+        //Jump();
+    }
+
+    private void HandleAnimation()
+    {
+        anim.SetFloat("MoveFloat", Mathf.Abs(rb.velocity.x));
     }
 
     private void Jump()
@@ -69,9 +86,44 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void HandleMovement()
+    {
+        Move();
+        ModifyLinearDrag();
+    }
+
     private void Move()
     {
-        rb.velocity = new Vector2(movement * moveForce, rb.velocity.y);
+        //manipulating movement
+        rb.AddForce(new Vector2(movement * moveForce, 0), ForceMode2D.Impulse);
+        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
+        {
+            rb.velocity = new Vector2((Mathf.Sign(rb.velocity.x)) * maxSpeed, rb.velocity.y);
+        }
+
+        //flipping
+        if((movement == 1 && !isFacingRight)||(movement == -1 && isFacingRight))
+        {
+            Flip();
+        }
+    }
+
+    private void ModifyLinearDrag()
+    {
+        if (Mathf.Abs(movement) < 0.1f)
+        {
+            rb.drag = linearDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
+    }
+
+    void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        transform.rotation = Quaternion.Euler(0, isFacingRight? 0: 180, 0);
     }
 
     private void OnDrawGizmosSelected()

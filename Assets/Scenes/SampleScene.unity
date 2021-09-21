@@ -8185,7 +8185,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 4
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -8220,14 +8220,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bc9a0c864305b428dcb7dcf2b8b0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 5
+  moveForce: 3
   jumpForce: 2
+  maxSpeed: 7
+  linearDrag: 20
   distanceToCheckGrounded: 1.68
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
   pressedJump: 0
+  isFacingRight: 0
 --- !u!1 &871890026
 GameObject:
   m_ObjectHideFlags: 0
