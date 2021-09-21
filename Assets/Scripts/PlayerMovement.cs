@@ -10,94 +10,41 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed = 7f;
     [SerializeField] float linearDrag = 0.5f;
     [SerializeField] float dragMultiplier = 0.15f;
-    [SerializeField] float gravityScale = 1;
-    [SerializeField] float fallMultiplier = 5f;
-    [SerializeField] float distanceToCheckGrounded;
-    [SerializeField] LayerMask groundLayer;
     float movement;
-    Rigidbody2D rb;
+    Player player;
     Animator anim;
-    [SerializeField] bool isGrounded;
-    [SerializeField] bool pressedJump;
-    [SerializeField] bool holdingJump;
     [SerializeField] bool isFacingRight;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
     }
 
     private void Start()
     {
-        Initialisation();
+        player = GetComponent<Player>();
     }
 
-    void Initialisation()
-    {
-    }
 
     // Update is called once per frame
     void Update()
     {
         TakeInput();
-        DebugOperations();
-        IsGrounded();
-    }
-
-    private void DebugOperations()
-    {
-        Debug.Log(movement);
-    }
-
-    void IsGrounded()
-    {
-        if (Physics2D.Raycast(transform.position, Vector2.down, distanceToCheckGrounded, groundLayer))
-            isGrounded = true;
-        else
-            isGrounded = false;
     }
 
     private void TakeInput()
     {
         movement = Input.GetAxisRaw("Horizontal");
-        if(Input.GetKeyDown(KeyCode.F) && isGrounded)
-        {
-            pressedJump = true;
-        }
-
-        if (Input.GetKey(KeyCode.F))
-            holdingJump = true;
-        else
-            holdingJump = false;
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
         HandleAnimation();
-        HandleJump();
     }
 
     private void HandleAnimation()
     {
-        anim.SetFloat("MoveFloat", Mathf.Abs(rb.velocity.x));
-    }
-
-    private void HandleJump()
-    {
-        Jump();
-        ModifyGravity();
-    }
-
-    private void Jump()
-    {
-        if (pressedJump)
-        {
-            Debug.Log("Jumping");
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            pressedJump = false;
-        }
+        anim.SetFloat("MoveFloat", Mathf.Abs(player.rb.velocity.x));
     }
 
     private void HandleMovement()
@@ -109,10 +56,10 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         //manipulating movement
-        rb.AddForce(new Vector2(movement * moveForce, 0), ForceMode2D.Impulse);
-        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
+        player.rb.AddForce(new Vector2(movement * moveForce, 0), ForceMode2D.Impulse);
+        if (Mathf.Abs(player.rb.velocity.x) > maxSpeed)
         {
-            rb.velocity = new Vector2((Mathf.Sign(rb.velocity.x)) * maxSpeed, rb.velocity.y);
+            player.rb.velocity = new Vector2((Mathf.Sign(player.rb.velocity.x)) * maxSpeed, player.rb.velocity.y);
         }
 
         //flipping
@@ -124,40 +71,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void ModifyLinearDrag()
     {
-        if (isGrounded)
+        if (player.isGrounded)
         {
             if (Mathf.Abs(movement) < 0.1f)
             {
-                rb.drag = linearDrag;
+                player.rb.drag = linearDrag;
             }
             else
             {
-                rb.drag = 0;
+                player.rb.drag = 0;
             }
         }
         else
         {
-            rb.drag = linearDrag * dragMultiplier;
-        }
-    }
-
-    void ModifyGravity()
-    {
-        if (isGrounded)
-        {
-            rb.gravityScale = 0;
-        }
-        else
-        {
-            rb.gravityScale = gravityScale;
-            if (rb.velocity.y < 0)
-            {
-                rb.gravityScale = gravityScale * fallMultiplier;
-            }
-            else if(rb.velocity.y > 0 && !holdingJump)
-            {
-                rb.gravityScale = gravityScale * (fallMultiplier / 2);
-            }
+            player.rb.drag = linearDrag * dragMultiplier;
         }
     }
 
@@ -167,8 +94,4 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, isFacingRight? 0: 180, 0);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Debug.DrawRay(transform.position, Vector3.down * distanceToCheckGrounded);
-    }
 }
