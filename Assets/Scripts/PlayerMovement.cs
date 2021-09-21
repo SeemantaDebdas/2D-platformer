@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveForce;
-    [SerializeField] float jumpForce;
     [SerializeField] float maxSpeed = 7f;
     [SerializeField] float linearDrag = 0.5f;
     [SerializeField] float dragMultiplier = 0.15f;
