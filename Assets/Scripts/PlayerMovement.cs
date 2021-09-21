@@ -30,15 +30,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Initialisation()
     {
-        pressedJump = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         TakeInput();
-        CheckGrounded();
         DebugOperations();
+        IsGrounded();
     }
 
     private void DebugOperations()
@@ -46,30 +45,28 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(movement);
     }
 
-    private void CheckGrounded()
+    void IsGrounded()
     {
         if (Physics2D.Raycast(transform.position, Vector2.down, distanceToCheckGrounded, groundLayer))
-        {
             isGrounded = true;
-        }
-
-        Debug.DrawRay(transform.position, Vector3.down * distanceToCheckGrounded);
+        else
+            isGrounded = false;
     }
 
     private void TakeInput()
     {
         movement = Input.GetAxisRaw("Horizontal");
-        if (Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.F) && isGrounded)
+        {
             pressedJump = true;
-        else
-            pressedJump = false;
+        }
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
         HandleAnimation();
-        //Jump();
+        HandleJump();
     }
 
     private void HandleAnimation()
@@ -77,12 +74,14 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("MoveFloat", Mathf.Abs(rb.velocity.x));
     }
 
-    private void Jump()
+    private void HandleJump()
     {
-        if (isGrounded && pressedJump)
+        if (pressedJump)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isGrounded = false;
+            Debug.Log("Jumping");
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
+            pressedJump = false;
         }
     }
 
@@ -110,13 +109,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void ModifyLinearDrag()
     {
-        if (Mathf.Abs(movement) < 0.1f)
+        if (isGrounded)
         {
-            rb.drag = linearDrag;
+            if (Mathf.Abs(movement) < 0.1f)
+            {
+                rb.drag = linearDrag;
+            }
+            else
+            {
+                rb.drag = 0;
+            }
         }
         else
         {
-            rb.drag = 0;
+            rb.drag = linearDrag * 0.15f;
         }
     }
 
