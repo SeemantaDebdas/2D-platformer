@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dragMultiplier = 0.15f;
     float movement;
     Player player;
+    PlayerJump playerJump;
     Animator anim;
     [SerializeField] bool isFacingRight;
     private void Awake()
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
+        playerJump = GetComponent<PlayerJump>();
     }
 
 
@@ -70,9 +72,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void ModifyLinearDrag()
     {
+        bool changingDirections = (movement > 0 && player.rb.velocity.x < 0
+                                || movement < 0 && player.rb.velocity.x > 0);
         if (player.isGrounded)
         {
-            if (Mathf.Abs(movement) < 0.1f)
+            if ((Mathf.Abs(movement) < 0.1f || changingDirections) && !playerJump.pressedJump)
             {
                 player.rb.drag = linearDrag;
             }

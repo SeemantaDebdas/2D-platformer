@@ -8280,8 +8280,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 768788768}
-  - component: {fileID: 768788767}
   - component: {fileID: 768788766}
+  - component: {fileID: 768788767}
   - component: {fileID: 768788771}
   - component: {fileID: 768788769}
   - component: {fileID: 768788770}

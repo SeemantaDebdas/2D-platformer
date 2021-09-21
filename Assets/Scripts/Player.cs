@@ -19,6 +19,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         IsGrounded();
+        DebugTexts();
+    }
+
+    void DebugTexts()
+    {
+        Debug.Log("X velocity: " + rb.velocity.x);
+        Debug.Log("Y velocity: " + rb.velocity.y);
     }
 
     void IsGrounded()

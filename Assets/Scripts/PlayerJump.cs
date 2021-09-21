@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerJump : MonoBehaviour
 { 
     [SerializeField] bool holdingJump;
-    [SerializeField] bool pressedJump;
+    public bool pressedJump;
 
     [SerializeField] float jumpForce;
     [SerializeField] float gravityScale = 1;
@@ -24,6 +24,7 @@ public class PlayerJump : MonoBehaviour
     void Update()
     {
         TakeInput();
+        ModifyGravity();
     }
 
     private void TakeInput()
@@ -48,15 +49,13 @@ public class PlayerJump : MonoBehaviour
     private void HandleJump()
     {
         Jump();
-        ModifyGravity();
     }
 
     private void Jump()
     {
         if (pressedJump)
         {
-            Debug.Log("Jumping");
-            //rb.velocity = new Vector2(rb.velocity.x, 0);
+            player.rb.velocity = new Vector2(player.rb.velocity.x, 0);
             player.rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             pressedJump = false;
         }
