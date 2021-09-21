@@ -12,11 +12,9 @@ public class PlayerMovement : MonoBehaviour
     float movement;
     Player player;
     PlayerJump playerJump;
-    Animator anim;
     [SerializeField] bool isFacingRight;
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -45,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleAnimation()
     {
-        anim.SetFloat("MoveFloat", Mathf.Abs(player.rb.velocity.x));
+        player.anim.SetFloat("MoveFloat", Mathf.Abs(player.rb.velocity.x));
     }
 
     private void HandleMovement()

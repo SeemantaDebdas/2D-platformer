@@ -25,6 +25,7 @@ public class PlayerJump : MonoBehaviour
     {
         TakeInput();
         ModifyGravity();
+        HandleAnimation();
     }
 
     private void TakeInput()
@@ -81,5 +82,10 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+    void HandleAnimation()
+    {
+        player.anim.SetFloat("JumpFloat", player.rb.velocity.y);
+        player.anim.SetBool("FallBool", player.isGrounded);
+    }
     
 }

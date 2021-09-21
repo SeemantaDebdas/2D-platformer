@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public Animator anim;
     public LayerMask groundLayer;
 
     public bool isGrounded;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -24,8 +26,7 @@ public class Player : MonoBehaviour
 
     void DebugTexts()
     {
-        Debug.Log("X velocity: " + rb.velocity.x);
-        Debug.Log("Y velocity: " + rb.velocity.y);
+        Debug.Log("Y velocity: " + Mathf.Sign(rb.velocity.y));
     }
 
     void IsGrounded()

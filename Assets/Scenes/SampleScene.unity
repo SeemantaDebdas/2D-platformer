@@ -8357,7 +8357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveForce: 3
-  maxSpeed: 7
+  maxSpeed: 5
   linearDrag: 20
   dragMultiplier: 0.15
   isFacingRight: 0
@@ -8375,7 +8375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdingJump: 0
   pressedJump: 0
-  jumpForce: 20
+  jumpForce: 15
   gravityScale: 1
   fallMultiplier: 5
   fallDivider: 1.5
@@ -8392,11 +8392,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  anim: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
-  distanceToCheckGrounded: 1.6
+  distanceToCheckGrounded: 1.75
 --- !u!1 &871890026
 GameObject:
   m_ObjectHideFlags: 0
