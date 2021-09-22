@@ -8,6 +8,7 @@ public class PlayerJump : MonoBehaviour
     [Header("State Variables")]
     [SerializeField] bool holdingJump;
     public bool pressedJump;
+    bool wasGrounded;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
@@ -39,6 +40,7 @@ public class PlayerJump : MonoBehaviour
 
         HandleCayoteTime();
         HandleBufferTime();
+        HandleParticles();
     }
 
     private void TakeInput()
@@ -122,4 +124,12 @@ public class PlayerJump : MonoBehaviour
         player.anim.SetBool("FallBool", player.isGrounded);
     }
     
+    void HandleParticles()
+    {
+        if (wasGrounded != player.isGrounded)
+        {
+            player.landingDustParticles.Play();
+        }
+        wasGrounded = player.isGrounded;
+    }
 }

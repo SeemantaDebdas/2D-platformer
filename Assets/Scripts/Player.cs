@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
 
     [Header("Particle System")]
     public ParticleSystem footDustTrail;
+    public ParticleSystem landingDustParticles;
 
     private void Awake()
     {
