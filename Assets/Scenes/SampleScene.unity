@@ -8285,6 +8285,8 @@ GameObject:
   - component: {fileID: 768788771}
   - component: {fileID: 768788769}
   - component: {fileID: 768788770}
+  - component: {fileID: 768788772}
+  - component: {fileID: 768788773}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8351,7 +8353,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768788765}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99bc9a0c864305b428dcb7dcf2b8b0dd, type: 3}
   m_Name: 
@@ -8375,10 +8377,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdingJump: 0
   pressedJump: 0
-  jumpForce: 15
+  jumpForce: 20
   gravityScale: 1
-  fallMultiplier: 5
-  fallDivider: 1.5
+  fallMultiplier: 6
+  fallDivider: 1.25
+  cayoteTime: 0.2
+  cayoteTimeCounter: 0
+  bufferTime: 0.1
+  bufferTimeCounter: 0
 --- !u!114 &768788771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8397,7 +8403,35 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
-  distanceToCheckGrounded: 1.75
+  distanceToCheckGrounded: 1.54
+  playerSpeed: 6
+  isCrouched: 0
+--- !u!114 &768788772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768788765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2361ee2ce8a887a459bd4a79b399179b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothDampTime: 0.03
+  isFacingRight: 0
+--- !u!114 &768788773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768788765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9622437f85ab7634cb97bc6fa224d907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &871890026
 GameObject:
   m_ObjectHideFlags: 0
