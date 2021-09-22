@@ -15,6 +15,10 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] float fallMultiplier = 5f;
     [SerializeField] float fallDivider = 2.5f;
 
+    [Header("Cayote Time")]
+    [SerializeField] float cayoteTime = 0.2f;
+    [SerializeField] float cayoteTimeCounter;
+
     Player player;
     // Start is called before the first frame update
     void Start()
@@ -28,13 +32,19 @@ public class PlayerJump : MonoBehaviour
         TakeInput();
         ModifyGravity();
         HandleAnimation();
+
+        HandleCayoteTime();
     }
 
     private void TakeInput()
     {
-        if (Input.GetKeyDown(KeyCode.F) && player.isGrounded)
+        if (Input.GetKeyDown(KeyCode.F) && cayoteTimeCounter > 0)
         {
             pressedJump = true;
+        }
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            cayoteTimeCounter = 0f;
         }
 
         if (Input.GetKey(KeyCode.F))
@@ -44,12 +54,6 @@ public class PlayerJump : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        HandleJump();
-    }
-
-
-    private void HandleJump()
     {
         Jump();
     }
@@ -82,6 +86,14 @@ public class PlayerJump : MonoBehaviour
                 player.rb.gravityScale = gravityScale * (fallMultiplier / fallDivider);
             }
         }
+    }
+
+    void HandleCayoteTime()
+    {
+        if (player.isGrounded)
+            cayoteTimeCounter = cayoteTime;
+        else
+            cayoteTimeCounter -= Time.deltaTime;
     }
 
     void HandleAnimation()

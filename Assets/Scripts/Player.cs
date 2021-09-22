@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         IsGrounded();
-        DebugTexts();
+        //DebugTexts();
     }
 
     void DebugTexts()
