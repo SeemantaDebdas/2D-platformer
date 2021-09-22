@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     [Header("State Variables")]
     public bool isCrouched;
 
+    [Header("Particle System")]
+    public ParticleSystem footDustTrail;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

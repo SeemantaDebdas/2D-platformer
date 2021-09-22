@@ -72,6 +72,8 @@ public class ModifiedMovement : MonoBehaviour
 
     void Flip()
     {
+        if (!player.isCrouched && player.isGrounded)
+            player.footDustTrail.Play();
         isFacingRight = !isFacingRight;
         transform.rotation = Quaternion.Euler(0, isFacingRight ? 0 : 180, 0);
     }
@@ -80,4 +82,5 @@ public class ModifiedMovement : MonoBehaviour
     {
         Debug.Log(moveSpeed);
     }
+
 }
