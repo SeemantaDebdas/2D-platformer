@@ -13,17 +13,36 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public float distanceToCheckGrounded;
 
+    [Header("General Factors")]
+    public float playerSpeed = 5f;
+    float tempSpeed;
+
+    [Header("State Variables")]
+    public bool isCrouched;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        isCrouched = false;
+        tempSpeed = playerSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
         IsGrounded();
-        DebugTexts();
+
+        if (isCrouched)
+        {
+            playerSpeed = 0;
+        }
+        else
+        {
+            playerSpeed = tempSpeed;
+        }
+
+        //DebugTexts();
     }
 
     void DebugTexts()

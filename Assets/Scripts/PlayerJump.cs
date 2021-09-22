@@ -15,6 +15,14 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] float fallMultiplier = 5f;
     [SerializeField] float fallDivider = 2.5f;
 
+    [Header("Cayote Time")]
+    [SerializeField] float cayoteTime = 0.2f;
+    [SerializeField] float cayoteTimeCounter;
+
+    [Header("Buffer Time")]
+    [SerializeField] float bufferTime = 0.1f;
+    [SerializeField] float bufferTimeCounter;
+
     Player player;
     // Start is called before the first frame update
     void Start()
@@ -28,11 +36,15 @@ public class PlayerJump : MonoBehaviour
         TakeInput();
         ModifyGravity();
         HandleAnimation();
+
+        HandleCayoteTime();
+        HandleBufferTime();
     }
 
     private void TakeInput()
     {
-        if (Input.GetKeyDown(KeyCode.F) && player.isGrounded)
+        
+        if (bufferTimeCounter>0 && cayoteTimeCounter > 0)
         {
             pressedJump = true;
         }
@@ -43,13 +55,19 @@ public class PlayerJump : MonoBehaviour
             holdingJump = false;
     }
 
-    private void FixedUpdate()
+    private void HandleBufferTime()
     {
-        HandleJump();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            bufferTimeCounter = bufferTime;
+        }
+        else
+        {
+            bufferTimeCounter -= Time.deltaTime;
+        }
     }
 
-
-    private void HandleJump()
+    private void FixedUpdate()
     {
         Jump();
     }
@@ -61,6 +79,9 @@ public class PlayerJump : MonoBehaviour
             player.rb.velocity = new Vector2(player.rb.velocity.x, 0);
             player.rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             pressedJump = false;
+
+            bufferTimeCounter = 0;
+            cayoteTimeCounter = 0;
         }
     }
 
@@ -82,6 +103,17 @@ public class PlayerJump : MonoBehaviour
                 player.rb.gravityScale = gravityScale * (fallMultiplier / fallDivider);
             }
         }
+    }
+
+    void HandleCayoteTime()
+    {
+        //if (Input.GetKeyUp(KeyCode.F))
+        //    cayoteTimeCounter = 0f;
+
+        if (player.isGrounded)
+            cayoteTimeCounter = cayoteTime;
+        else
+            cayoteTimeCounter -= Time.deltaTime;
     }
 
     void HandleAnimation()
