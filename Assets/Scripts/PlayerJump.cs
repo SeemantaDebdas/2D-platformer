@@ -19,6 +19,10 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] float cayoteTime = 0.2f;
     [SerializeField] float cayoteTimeCounter;
 
+    [Header("Buffer Time")]
+    [SerializeField] float bufferTime = 0.1f;
+    [SerializeField] float bufferTimeCounter;
+
     Player player;
     // Start is called before the first frame update
     void Start()
@@ -34,23 +38,33 @@ public class PlayerJump : MonoBehaviour
         HandleAnimation();
 
         HandleCayoteTime();
+        HandleBufferTime();
     }
 
     private void TakeInput()
     {
-        if (Input.GetKeyDown(KeyCode.F) && cayoteTimeCounter > 0)
+        
+        if (bufferTimeCounter>0 && cayoteTimeCounter > 0)
         {
             pressedJump = true;
-        }
-        if (Input.GetKeyUp(KeyCode.F))
-        {
-            cayoteTimeCounter = 0f;
         }
 
         if (Input.GetKey(KeyCode.F))
             holdingJump = true;
         else
             holdingJump = false;
+    }
+
+    private void HandleBufferTime()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            bufferTimeCounter = bufferTime;
+        }
+        else
+        {
+            bufferTimeCounter -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -65,6 +79,9 @@ public class PlayerJump : MonoBehaviour
             player.rb.velocity = new Vector2(player.rb.velocity.x, 0);
             player.rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             pressedJump = false;
+
+            bufferTimeCounter = 0;
+            cayoteTimeCounter = 0;
         }
     }
 
@@ -90,6 +107,9 @@ public class PlayerJump : MonoBehaviour
 
     void HandleCayoteTime()
     {
+        //if (Input.GetKeyUp(KeyCode.F))
+        //    cayoteTimeCounter = 0f;
+
         if (player.isGrounded)
             cayoteTimeCounter = cayoteTime;
         else
