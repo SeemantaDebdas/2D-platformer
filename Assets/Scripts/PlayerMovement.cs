@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Horizontal Movement")]
     [SerializeField] float moveForce;
     [SerializeField] float maxSpeed = 7f;
+    float movement;
+
+    [Header("Linear Drag")]
     [SerializeField] float linearDrag = 0.5f;
     [SerializeField] float dragMultiplier = 0.15f;
-    float movement;
+    
+    [Header("State Variables")]
+    [SerializeField] bool isFacingRight;
+
     Player player;
     PlayerJump playerJump;
-    [SerializeField] bool isFacingRight;
+    
     private void Awake()
     {
     }

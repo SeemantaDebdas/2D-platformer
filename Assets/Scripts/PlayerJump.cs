@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 { 
+    [Header("State Variables")]
     [SerializeField] bool holdingJump;
     public bool pressedJump;
 
+    [Header("Jumping")]
     [SerializeField] float jumpForce;
     [SerializeField] float gravityScale = 1;
     [SerializeField] float fallMultiplier = 5f;

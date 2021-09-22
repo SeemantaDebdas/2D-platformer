@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("References")]
     public Rigidbody2D rb;
     public Animator anim;
-    public LayerMask groundLayer;
 
+    [Header("Ground Detection")]
+    public LayerMask groundLayer;
     public bool isGrounded;
     public float distanceToCheckGrounded;
 
