@@ -5,7 +5,7 @@ using UnityEngine;
 public class ModifiedMovement : MonoBehaviour
 {
     [Header("Horizontal Movement")]
-    [SerializeField] float moveSpeed;
+    float moveSpeed;
     [Range(0,1)][SerializeField] float smoothDampTime = 0.1f;
     float movement;
     Vector2 currentVelocity;
@@ -17,6 +17,7 @@ public class ModifiedMovement : MonoBehaviour
 
     private void Awake()
     {
+       
     }
 
     private void Start()
@@ -29,11 +30,13 @@ public class ModifiedMovement : MonoBehaviour
     void Update()
     {
         TakeInput();
+        //DebugTexts();
     }
 
     private void TakeInput()
     {
         movement = Input.GetAxisRaw("Horizontal");
+        moveSpeed = player.playerSpeed;
     }
 
     private void FixedUpdate()
@@ -71,5 +74,10 @@ public class ModifiedMovement : MonoBehaviour
     {
         isFacingRight = !isFacingRight;
         transform.rotation = Quaternion.Euler(0, isFacingRight ? 0 : 180, 0);
+    }
+
+    void DebugTexts()
+    {
+        Debug.Log(moveSpeed);
     }
 }
