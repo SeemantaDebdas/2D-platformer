@@ -71,7 +71,7 @@ public class PlayerJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-            Jump();
+        Jump();
     }
 
     private void Jump()
