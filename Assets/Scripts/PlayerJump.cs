@@ -46,7 +46,7 @@ public class PlayerJump : MonoBehaviour
     private void TakeInput()
     {
         
-        if (bufferTimeCounter>0 && cayoteTimeCounter > 0)
+        if (bufferTimeCounter>0 && cayoteTimeCounter > 0 && !player.isCrouched)
         {
             pressedJump = true;
         }
@@ -71,7 +71,7 @@ public class PlayerJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Jump();
+            Jump();
     }
 
     private void Jump()

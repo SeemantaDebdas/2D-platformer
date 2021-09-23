@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,31 +23,48 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         attackTimerCounter -= Time.deltaTime;
-        if(Input.GetKeyDown(KeyCode.R) && !isAttacking && player.isGrounded)
-        {
-            isAttacking = true;
-            player.anim.Play("Punch");
-            attackTimerCounter = attackTimer;
-        }
-        else if(Input.GetKeyDown(KeyCode.R) && isAttacking && attackTimerCounter > 0)
-        {
-            attackCounter++;
-            //if(attackCounter == numberOfAttacks)
-            //{
-                
-            //}
-        }
-
-        player.anim.SetFloat("AttackFloat", attackCounter);
-        //player.anim.SetBool("AttackBool", isAttacking);
+        GroundedAttack();
+        FlyingAttack();
 
         if (attackTimerCounter < 0)
-        { 
+        {
             isAttacking = false;
             attackCounter = 1;
         }
 
-        
-        Debug.Log(attackTimerCounter);
+        player.anim.SetFloat("AttackFloat", attackCounter);
+        player.anim.SetFloat("AttackTimerFloat", attackTimerCounter);
+    }
+
+    private void FlyingAttack()
+    {
+        if(Input.GetKeyDown(KeyCode.R) && !player.isGrounded)
+        {
+            player.anim.Play("FlyingKick");
+        }
+    }
+
+    private void GroundedAttack()
+    {
+        if (player.isGrounded)
+        {
+            if (Input.GetKeyDown(KeyCode.R) && player.isCrouched)
+            {
+                player.anim.Play("CrouchedKick");
+            }
+            else if (!player.isCrouched)
+            {
+                if (Input.GetKeyDown(KeyCode.R) && !isAttacking)
+                {
+                    isAttacking = true;
+                    player.anim.Play("Punch");
+                    attackTimerCounter = attackTimer;
+                }
+                else if (Input.GetKeyDown(KeyCode.R) && isAttacking && attackTimerCounter > 0)
+                {
+                    attackCounter++;
+                }
+            }
+        }
     }
 }
