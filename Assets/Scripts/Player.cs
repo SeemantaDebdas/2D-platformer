@@ -66,4 +66,5 @@ public class Player : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.down * distanceToCheckGrounded);
     }
+
 }
