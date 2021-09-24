@@ -177,7 +177,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
-  distanceToCheckGrounded: 1.54
+  distanceToCheckGrounded: 1.75
+  Health: 100
   playerSpeed: 6
   isCrouched: 0
   footDustTrail: {fileID: 8277633016381826813}
