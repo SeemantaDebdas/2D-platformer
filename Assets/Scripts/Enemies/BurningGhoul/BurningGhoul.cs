@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BurningGhoul : MonoBehaviour
+public class BurningGhoul : MonoBehaviour,IDamagable
 {
     [SerializeField] Transform groundCheckTransform;
     [SerializeField] float groundCheckDistance;
@@ -11,6 +11,8 @@ public class BurningGhoul : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] bool isFacingRight;
     [SerializeField] bool groundDetected;
+    [SerializeField] GameObject explosionPrefab;
+    [SerializeField] float destroyTimer;
 
     float speed;
     Rigidbody2D rb;
@@ -50,5 +52,13 @@ public class BurningGhoul : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawRay(groundCheckTransform.position, Vector3.down * groundCheckDistance);
+    }
+
+    public void Damage()
+    {
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        GameObject explosionPrefabSpawn = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionPrefabSpawn, destroyTimer);
+        Destroy(this.gameObject, destroyTimer);
     }
 }

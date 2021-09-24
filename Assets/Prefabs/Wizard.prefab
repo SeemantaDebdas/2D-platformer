@@ -87,6 +87,7 @@ MonoBehaviour:
   canAttack: 0
   coolDownTimer: 2.5
   coolDownTimerCounter: 0
+  explosionPrefab: {fileID: 6208741649563468260, guid: a498636da8d393d4bab6eee0d65e34a6, type: 3}
 --- !u!1 &3069178288453210231
 GameObject:
   m_ObjectHideFlags: 0

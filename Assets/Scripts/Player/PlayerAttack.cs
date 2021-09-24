@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [Header("Attack Parameters")]
     [SerializeField] int attackCounter = 0;
     [SerializeField] float attackTimerCounter;
     [SerializeField] float attackTimer;
     [SerializeField] int numberOfAttacks;
     [SerializeField] bool isAttacking;
+
+    [Header("Hitbox Parameters")]
+    [SerializeField] float hitBoxTimer;
+    [SerializeField] float hitBoxTimerCounter;
 
     Player player;
     // Start is called before the first frame update
@@ -66,5 +71,10 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
+    }
+
+    void HitboxActivate()
+    {
+
     }
 }
