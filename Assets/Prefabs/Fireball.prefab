@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 804965772412348102}
   - component: {fileID: 4527436433168955547}
   - component: {fileID: 5631905018167306722}
+  - component: {fileID: -5853025060662678323}
+  - component: {fileID: 4563925975961448642}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -117,3 +119,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireballSpeed: 5
+  destroyTimer: 2.5
+--- !u!58 &-5853025060662678323
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054739192001680186}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.325
+--- !u!114 &4563925975961448642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054739192001680186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ce366128ce3a041bea6a7643d86b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

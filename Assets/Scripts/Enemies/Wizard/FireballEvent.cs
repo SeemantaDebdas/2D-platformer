@@ -11,4 +11,6 @@ public class FireballEvent : MonoBehaviour
     {
         Instantiate(fireballPrefab, spawnPoint.transform.position, Quaternion.identity);
     }
+
+    
 }

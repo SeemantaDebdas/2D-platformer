@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IDamagable
 {
     [Header("References")]
     public Rigidbody2D rb;
@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float distanceToCheckGrounded;
 
     [Header("General Factors")]
+    public int Health = 100;
     public float playerSpeed = 5f;
     float tempSpeed;
 
@@ -67,4 +68,9 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * distanceToCheckGrounded);
     }
 
+    public void Damage()
+    {
+        Health -= 1;
+        anim.Play("Hit");
+    }
 }

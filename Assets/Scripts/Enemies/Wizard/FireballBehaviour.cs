@@ -5,6 +5,8 @@ using UnityEngine;
 public class FireballBehaviour : MonoBehaviour
 {
     [SerializeField] float fireballSpeed;
+    [SerializeField] float destroyTimer=5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +17,11 @@ public class FireballBehaviour : MonoBehaviour
     void Update()
     {
         transform.Translate(-Vector3.right * fireballSpeed * Time.deltaTime);
+        Destroy(this.gameObject, destroyTimer);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(this.gameObject, 0.15f);
     }
 }
