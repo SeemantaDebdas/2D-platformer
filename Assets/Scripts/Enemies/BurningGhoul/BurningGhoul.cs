@@ -11,6 +11,7 @@ public class BurningGhoul : MonoBehaviour,IDamagable
     [SerializeField] float moveSpeed;
     [SerializeField] bool isFacingRight;
     [SerializeField] bool groundDetected;
+    [SerializeField] bool isHit;
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] float destroyTimer;
 
@@ -40,7 +41,8 @@ public class BurningGhoul : MonoBehaviour,IDamagable
             groundDetected = true;
         }
         speed = (isFacingRight) ? moveSpeed : -moveSpeed;
-        rb.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
+        if(!isHit)
+            rb.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
     }
 
     private void Flip()
@@ -56,7 +58,9 @@ public class BurningGhoul : MonoBehaviour,IDamagable
 
     public void Damage()
     {
+        isHit = true;
         GetComponent<CapsuleCollider2D>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
         GameObject explosionPrefabSpawn = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(explosionPrefabSpawn, destroyTimer);
         Destroy(this.gameObject, destroyTimer);
