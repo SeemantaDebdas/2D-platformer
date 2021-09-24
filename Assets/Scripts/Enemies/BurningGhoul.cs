@@ -28,14 +28,14 @@ public class BurningGhoul : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Physics2D.Raycast(groundCheckTransform.position, Vector2.down, groundCheckLayers))
+        if (!Physics2D.Raycast(groundCheckTransform.position, Vector2.down,groundCheckDistance, groundCheckLayers))
         {
-            groundDetected = true;
+            groundDetected = false;
             Flip();
         }
         else
         {
-            groundDetected = false;
+            groundDetected = true;
         }
         speed = (isFacingRight) ? moveSpeed : -moveSpeed;
         rb.MovePosition(transform.position + Vector3.right * speed * Time.deltaTime);
@@ -44,7 +44,7 @@ public class BurningGhoul : MonoBehaviour
     private void Flip()
     {
         isFacingRight = !isFacingRight;
-        transform.rotation = Quaternion.Euler(0, 180, 0);
+        transform.rotation = Quaternion.Euler(0, (isFacingRight) ? 180 : 0, 0);
     }
 
     private void OnDrawGizmosSelected()
