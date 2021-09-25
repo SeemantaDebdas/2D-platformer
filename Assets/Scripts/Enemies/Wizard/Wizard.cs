@@ -5,6 +5,7 @@ using UnityEngine;
 public class Wizard : MonoBehaviour, IDamagable
 {
     [SerializeField] bool canAttack;
+    [SerializeField] bool isHit;
     [SerializeField] float coolDownTimer = 0.5f;
     [SerializeField] float coolDownTimerCounter;
     [SerializeField] GameObject explosionPrefab;
@@ -14,6 +15,7 @@ public class Wizard : MonoBehaviour, IDamagable
     // Start is called before the first frame update
     void Awake()
     {
+        isHit = false;
         anim = GetComponentInChildren<Animator>();
         coolDownTimerCounter = coolDownTimer;
     }
@@ -21,21 +23,26 @@ public class Wizard : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
-        coolDownTimerCounter -= Time.deltaTime;
-        if (coolDownTimerCounter < 0)
+        if (!isHit)
         {
-            canAttack = true;
-            coolDownTimerCounter = coolDownTimer;
+            coolDownTimerCounter -= Time.deltaTime;
+            if (coolDownTimerCounter < 0)
+            {
+                canAttack = true;
+                coolDownTimerCounter = coolDownTimer;
+            }
+            else
+            {
+                canAttack = false;
+            }
+            anim.SetBool("AttackBool", canAttack);
         }
-        else
-        {
-            canAttack = false;
-        }
-        anim.SetBool("AttackBool", canAttack);
     }
 
     public void Damage()
     {
+        isHit = true;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
         GetComponent<CapsuleCollider2D>().enabled = false;
         GameObject explosionPrefabSpawn = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(explosionPrefabSpawn, destroyTimer);
