@@ -7,6 +7,7 @@ public class Player : MonoBehaviour,IDamagable
     [Header("References")]
     public Rigidbody2D rb;
     public Animator anim;
+    public HealthBar healthBar;
 
     [Header("Ground Detection")]
     public LayerMask groundLayer;
@@ -14,7 +15,8 @@ public class Player : MonoBehaviour,IDamagable
     public float distanceToCheckGrounded;
 
     [Header("General Factors")]
-    public int Health = 100;
+    public int maxHealth = 4;
+    public int currentHealth;
     public float playerSpeed = 5f;
     float tempSpeed;
 
@@ -31,6 +33,13 @@ public class Player : MonoBehaviour,IDamagable
         anim = GetComponentInChildren<Animator>();
         isCrouched = false;
         tempSpeed = playerSpeed;
+    }
+
+    private void Start()
+    {
+        healthBar = FindObjectOfType<HealthBar>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -70,7 +79,8 @@ public class Player : MonoBehaviour,IDamagable
 
     public void Damage()
     {
-        Health -= 1;
+        currentHealth -= 1;
+        healthBar.SetHealth(currentHealth);
         anim.Play("Hit");
     }
 }
